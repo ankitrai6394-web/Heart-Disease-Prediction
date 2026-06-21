@@ -118,7 +118,7 @@ if st.button("Predict Heart Disease"):
     if prediction == 1:
         st.error("💔  High Risk of Heart Disease ⚠️")
         st.snow()
-        st.image("https://media.giphy.com/media/3o7TKtnuHOHHUjR38Y/giphy.gif")
+        st.image("https://media.giphy.com/media/l0HlPwMAzh13pcZ20/giphy.gif",width=500)
         
     else:
         st.success("✅ Low Risk of Heart Disease")
