@@ -116,7 +116,8 @@ if st.button("Predict Heart Disease"):
     prediction = model.predict(scaled_data)[0]
 
     if prediction == 1:
-        st.error("⚠️ High Risk of Heart Disease")
+        st.error(""💔  High Risk of Heart Disease ⚠️")
+        st.snow()
     else:
         st.success("✅ Low Risk of Heart Disease")
         st.balloons()
