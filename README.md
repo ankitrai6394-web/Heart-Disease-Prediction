@@ -108,6 +108,12 @@ After deployment, access the application through the generated Streamlit URL.
 
 ---
 
+## Live Demo
+
+https://heart-disease-prediction-rawoh23vwty5gmpcqbk6ed.streamlit.app/
+
+---
+
 ## 📈 Machine Learning Workflow
 
 1. Data Collection
