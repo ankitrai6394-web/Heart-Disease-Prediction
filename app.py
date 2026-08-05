@@ -27,114 +27,240 @@ scaler = joblib.load("heart_scaler.pkl")
 st.markdown("""
 <style>
 
-html, body, [class*="css"]{
-    font-family:Arial;
-}
+/* ===========================
+   BACKGROUND
+=========================== */
 
 .stApp{
-    background:#eef5f7;
+    background:#edf5f3;
 }
 
-/* Remove Streamlit Header */
-header{
-    visibility:hidden;
-}
-
-footer{
-    visibility:hidden;
-}
-
-.block-container{
+.main .block-container{
     padding-top:1rem;
-    padding-bottom:1rem;
-    max-width:1300px;
+    padding-bottom:2rem;
+    max-width:1200px;
 }
 
-/* HERO SECTION */
+/* ===========================
+   HERO SECTION
+=========================== */
 
 .hero{
-
-background:linear-gradient(135deg,#0b3d2e,#14532d);
-
-padding:35px;
-
-border-radius:18px;
-
-color:white;
-
-box-shadow:0 8px 18px rgba(0,0,0,.2);
-
-margin-bottom:20px;
-
+    background:#071d18;
+    padding:35px;
+    border-radius:20px;
+    color:white;
+    box-shadow:0px 10px 25px rgba(0,0,0,.25);
+    margin-bottom:25px;
 }
 
-/* CARD */
-
-.card{
-
-background:white;
-
-padding:22px;
-
-border-radius:15px;
-
-box-shadow:0px 5px 12px rgba(0,0,0,.08);
-
-margin-bottom:20px;
-
+.hero h1{
+    color:white !important;
+    font-size:48px;
+    font-weight:bold;
 }
 
-/* BUTTON */
+.hero h5{
+    color:#69d9cd !important;
+    letter-spacing:4px;
+}
+
+.hero p{
+    color:#d8f7f4 !important;
+    font-size:20px;
+}
+
+.ecg{
+    color:#40d7c7;
+    font-size:26px;
+    letter-spacing:3px;
+    margin-top:20px;
+}
+
+/* ===========================
+   CARDS
+=========================== */
+
+.section{
+    background:white;
+    border-radius:18px;
+    padding:25px;
+    margin-bottom:20px;
+    box-shadow:0px 4px 15px rgba(0,0,0,.08);
+    color:#1f2937;
+}
+
+.result{
+    background:white;
+    border-radius:18px;
+    padding:25px;
+    box-shadow:0px 4px 15px rgba(0,0,0,.08);
+    color:#1f2937;
+}
+
+/* ===========================
+   HEADINGS
+=========================== */
+
+h1,h2,h3,h4,h5,h6{
+    color:#1f2937 !important;
+}
+
+p{
+    color:#4b5563 !important;
+}
+
+/* Hero keeps white text */
+
+.hero h1,
+.hero h2,
+.hero h3,
+.hero h4,
+.hero h5,
+.hero p{
+    color:white !important;
+}
+
+.hero h5{
+    color:#69d9cd !important;
+}
+
+/* ===========================
+   LABELS
+=========================== */
+
+label{
+    color:#1f2937 !important;
+    font-weight:600;
+}
+
+/* ===========================
+   INPUT BOXES
+=========================== */
+
+.stNumberInput input{
+    background:#242530;
+    color:white !important;
+    border-radius:10px;
+}
+
+.stSelectbox div[data-baseweb="select"]{
+    background:#242530;
+    border-radius:10px;
+}
+
+/* ===========================
+   BUTTON
+=========================== */
 
 div.stButton>button{
 
-width:100%;
+    width:100%;
+    height:60px;
 
-height:60px;
+    border:none;
 
-font-size:22px;
+    border-radius:12px;
 
-font-weight:bold;
+    background:#06382d;
 
-background:#0f766e;
+    color:white;
 
-color:white;
+    font-size:22px;
 
-border-radius:12px;
+    font-weight:bold;
 
-border:none;
+    transition:.3s;
 
 }
 
 div.stButton>button:hover{
 
-background:#115e59;
+    background:#0b6856;
 
-color:white;
+    color:white;
 
 }
 
-/* METRIC */
+/* ===========================
+   METRICS
+=========================== */
 
 [data-testid="stMetric"]{
 
-background:white;
+    background:white;
 
-padding:12px;
+    padding:15px;
 
-border-radius:12px;
+    border-radius:15px;
 
-box-shadow:0px 3px 8px rgba(0,0,0,.08);
+    box-shadow:0px 4px 10px rgba(0,0,0,.08);
 
 }
 
-/* Sidebar */
+[data-testid="stMetricLabel"]{
+
+    color:#6b7280 !important;
+
+    font-size:14px;
+
+}
+
+[data-testid="stMetricValue"]{
+
+    color:#111827 !important;
+
+    font-size:34px;
+
+    font-weight:bold;
+
+}
+
+/* ===========================
+   SUCCESS / ERROR
+=========================== */
+
+.stAlert{
+
+    border-radius:12px;
+
+}
+
+/* ===========================
+   TABLE
+=========================== */
+
+table{
+
+    border-radius:10px;
+
+    overflow:hidden;
+
+}
+
+/* ===========================
+   SIDEBAR
+=========================== */
 
 section[data-testid="stSidebar"]{
 
-background:#083344;
+    background:#071d18;
 
-color:white;
+}
+
+section[data-testid="stSidebar"] *{
+
+    color:white;
+
+}
+
+/* ===========================
+   FOOTER
+=========================== */
+
+footer{
+
+    visibility:hidden;
 
 }
 
