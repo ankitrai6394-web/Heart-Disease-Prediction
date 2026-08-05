@@ -2,198 +2,273 @@ import streamlit as st
 import pandas as pd
 import pickle
 
+# ==============================
+# PAGE CONFIGURATION
+# ==============================
+
 st.set_page_config(
     page_title="Heart Disease Prediction",
     page_icon="❤️",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="expanded"
 )
 
-model = pickle.load(open("knn_heart_model.pkl","rb"))
-scaler = pickle.load(open("heart_scaler.pkl","rb"))
+# ==============================
+# LOAD MODEL
+# ==============================
+
+model = pickle.load(open("knn_heart_model.pkl", "rb"))
+scaler = pickle.load(open("heart_scaler.pkl", "rb"))
+
+# ==============================
+# CUSTOM CSS
+# ==============================
 
 st.markdown("""
 <style>
 
-.stApp{
-background:#edf5f3;
+html, body, [class*="css"]{
+    font-family:Arial;
 }
 
-.main{
-padding-top:0rem;
+.stApp{
+    background:#eef5f7;
+}
+
+/* Remove Streamlit Header */
+header{
+    visibility:hidden;
+}
+
+footer{
+    visibility:hidden;
 }
 
 .block-container{
-padding-top:1rem;
-padding-bottom:1rem;
+    padding-top:1rem;
+    padding-bottom:1rem;
+    max-width:1300px;
 }
+
+/* HERO SECTION */
 
 .hero{
 
-background:#071d18;
+background:linear-gradient(135deg,#0b3d2e,#14532d);
+
 padding:35px;
+
 border-radius:18px;
+
 color:white;
 
-box-shadow:0px 8px 20px rgba(0,0,0,.25);
+box-shadow:0 8px 18px rgba(0,0,0,.2);
+
+margin-bottom:20px;
 
 }
 
-.ecg{
+/* CARD */
 
-font-size:24px;
-color:#3fd1c2;
-
-letter-spacing:3px;
-
-}
-
-.section{
+.card{
 
 background:white;
 
-padding:25px;
+padding:22px;
 
 border-radius:15px;
 
-margin-top:20px;
+box-shadow:0px 5px 12px rgba(0,0,0,.08);
 
-box-shadow:0px 3px 10px rgba(0,0,0,.08);
-
-}
-
-.result{
-
-background:white;
-
-padding:25px;
-
-border-radius:15px;
-
-text-align:center;
-
-box-shadow:0px 3px 10px rgba(0,0,0,.1);
+margin-bottom:20px;
 
 }
+
+/* BUTTON */
 
 div.stButton>button{
 
-background:#06261f;
-
-color:white;
-
-font-size:22px;
+width:100%;
 
 height:60px;
 
-border-radius:12px;
-
-width:100%;
+font-size:22px;
 
 font-weight:bold;
+
+background:#0f766e;
+
+color:white;
+
+border-radius:12px;
+
+border:none;
 
 }
 
 div.stButton>button:hover{
 
-background:#0b5f52;
+background:#115e59;
+
+color:white;
+
+}
+
+/* METRIC */
+
+[data-testid="stMetric"]{
+
+background:white;
+
+padding:12px;
+
+border-radius:12px;
+
+box-shadow:0px 3px 8px rgba(0,0,0,.08);
+
+}
+
+/* Sidebar */
+
+section[data-testid="stSidebar"]{
+
+background:#083344;
 
 color:white;
 
 }
 
 </style>
-""",unsafe_allow_html=True)
+""", unsafe_allow_html=True)
+
+# ==============================
+# SIDEBAR
+# ==============================
+
+with st.sidebar:
+
+    st.title("❤️ Heart AI")
+
+    st.markdown("---")
+
+    st.success("Machine Learning Project")
+
+    st.write("### Model")
+    st.info("K-Nearest Neighbors")
+
+    st.write("### Technology")
+
+    st.write("""
+- Python
+- Streamlit
+- Scikit-Learn
+- Pandas
+- NumPy
+""")
+
+    st.markdown("---")
+
+    st.warning(
+        "This tool is intended for educational purposes only."
+    )
+
+# ==============================
+# HERO SECTION
+# ==============================
 
 st.markdown("""
-
 <div class="hero">
 
-<h5 style="letter-spacing:4px;color:#65d7cb;">
+<h4 style="letter-spacing:4px;color:#A7F3D0;">
 AI POWERED CLINICAL SUPPORT
-</h5>
+</h4>
 
 <h1>
-❤️ Heart Disease Prediction
+❤️ Heart Disease Prediction System
 </h1>
 
 <p style="font-size:20px;">
-Predict heart disease risk using Machine Learning.
+Predict the likelihood of heart disease using Machine Learning.
 </p>
 
-<div class="ecg">
+<hr>
 
-──────────────────╱╲────────╱╲────────────────
+<h3>
+🫀 ───────╱╲────────────╱╲────────────╱╲───────
+</h3>
 
 </div>
+""", unsafe_allow_html=True)
 
-</div>
+# ==============================
+# DASHBOARD METRICS
+# ==============================
 
-""",unsafe_allow_html=True)
+m1, m2, m3, m4 = st.columns(4)
 
-left,right=st.columns([2,1])
+with m1:
+    st.metric("Patients", "918")
+
+with m2:
+    st.metric("Algorithm", "KNN")
+
+with m3:
+    st.metric("Accuracy", "87%")
+
+with m4:
+    st.metric("Status", "🟢 Online")
+
+st.markdown("<br>", unsafe_allow_html=True)
+
+# =====================================================
+# INPUT SECTION
+# =====================================================
+
+left, right = st.columns([2, 1])
+
+# -------------------------------
+# LEFT COLUMN
+# -------------------------------
 
 with left:
 
-    st.markdown(
-    '<div class="section">',
-    unsafe_allow_html=True)
+    st.markdown("""
+    <div class="card">
+    <h2>👤 Patient Profile</h2>
+    </div>
+    """, unsafe_allow_html=True)
 
-    st.subheader("👤 Patient Profile")
+    col1, col2 = st.columns(2)
 
-    st.write("Fill patient information.")
-
-    st.markdown("</div>",unsafe_allow_html=True)
-
-with right:
-
-    st.markdown(
-    '<div class="result">',
-    unsafe_allow_html=True)
-
-    st.subheader("❤️ Prediction Result")
-
-    st.info("Fill all patient details and press **Run Diagnosis**.")
-
-    st.markdown("</div>",unsafe_allow_html=True)
-
-with left:
-
-    st.markdown("## 👤 Patient Profile")
-
-    c1,c2=st.columns(2)
-
-    with c1:
-        age=st.number_input(
+    with col1:
+        age = st.number_input(
             "Age",
             min_value=18,
             max_value=100,
             value=45
         )
 
-    with c2:
-        sex=st.selectbox(
+    with col2:
+        sex = st.selectbox(
             "Gender",
-            ["Male","Female"]
+            ["Male", "Female"]
         )
 
-    c1,c2=st.columns(2)
+    col1, col2 = st.columns(2)
 
-    with c1:
-
-        chest_pain=st.selectbox(
+    with col1:
+        chest_pain = st.selectbox(
             "Chest Pain Type",
             [
+                "ASY",
                 "ATA",
                 "NAP",
-                "TA",
-                "ASY"
+                "TA"
             ]
         )
 
-    with c2:
-
-        resting_ecg=st.selectbox(
+    with col2:
+        resting_ecg = st.selectbox(
             "Resting ECG",
             [
                 "Normal",
@@ -203,71 +278,81 @@ with left:
         )
 
     st.markdown("---")
-    st.markdown("## 🩺 Vitals & Laboratory")
 
-    c1,c2=st.columns(2)
+    st.markdown("""
+    <div class="card">
+    <h2>🩺 Vitals & Laboratory</h2>
+    </div>
+    """, unsafe_allow_html=True)
 
-    with c1:
+    col1, col2 = st.columns(2)
 
-        resting_bp=st.number_input(
-            "Resting Blood Pressure",
-            50,
-            250,
-            120
+    with col1:
+
+        resting_bp = st.number_input(
+            "Resting Blood Pressure (mmHg)",
+            min_value=50,
+            max_value=250,
+            value=120
         )
 
-    with c2:
+    with col2:
 
-        cholesterol=st.number_input(
-            "Cholesterol",
-            0,
-            700,
-            200
+        cholesterol = st.number_input(
+            "Cholesterol (mg/dL)",
+            min_value=0,
+            max_value=700,
+            value=200
         )
 
-    c1,c2=st.columns(2)
+    col1, col2 = st.columns(2)
 
-    with c1:
+    with col1:
 
-        max_hr=st.number_input(
+        max_hr = st.number_input(
             "Maximum Heart Rate",
-            50,
-            250,
-            150
+            min_value=50,
+            max_value=250,
+            value=150
         )
 
-    with c2:
+    with col2:
 
-        oldpeak=st.number_input(
-            "Old Peak",
-            0.0,
-            10.0,
-            1.0,
+        oldpeak = st.number_input(
+            "Oldpeak",
+            min_value=0.0,
+            max_value=10.0,
+            value=1.0,
             step=0.1
         )
 
-    fasting_bs=st.checkbox(
-        "Fasting Blood Sugar > 120 mg/dl"
+    fasting_bs = st.checkbox(
+        "Fasting Blood Sugar > 120 mg/dL"
     )
 
     st.markdown("---")
-    st.markdown("## 📈 Cardiac Test Results")
 
-    c1,c2=st.columns(2)
+    st.markdown("""
+    <div class="card">
+    <h2>📈 Cardiac Test Results</h2>
+    </div>
+    """, unsafe_allow_html=True)
 
-    with c1:
+    col1, col2 = st.columns(2)
 
-        exercise_angina=st.selectbox(
-            "Exercise Angina",
+    with col1:
+
+        exercise_angina = st.selectbox(
+            "Exercise-Induced Angina",
             [
                 "No",
                 "Yes"
             ]
         )
 
-    with c2:
+    with col2:
 
-        st_slope=st.selectbox(
+        st_slope = st.selectbox(
             "ST Slope",
             [
                 "Up",
@@ -276,81 +361,124 @@ with left:
             ]
         )
 
-st.markdown("<br>",unsafe_allow_html=True)
+    st.markdown("<br>", unsafe_allow_html=True)
 
-predict=st.button(
-    "❤️ Run Diagnosis"
-)
+    predict = st.button("❤️ Run Diagnosis")
+
+# -------------------------------
+# RIGHT COLUMN
+# -------------------------------
 
 with right:
 
     st.markdown("""
-    <div class="result">
+    <div class="card">
 
-    <h2>❤️ Prediction Panel</h2>
-
-    <br>
-
-    <h1>🫀</h1>
+    <h2 align="center">
+    ❤️ Prediction Panel
+    </h2>
 
     <br>
 
-    Fill patient details and click
+    <h1 align="center">
+    🫀
+    </h1>
+
+    <hr>
+
+    <h4 align="center">
+
+    Fill the patient information
+
+    and press
+
     <br><br>
 
-    <b>Run Diagnosis</b>
+    <span style="color:#0F766E;">
+    Run Diagnosis
+    </span>
+
+    </h4>
 
     </div>
-    """,unsafe_allow_html=True)
 
-predict = st.button("❤️ Run Diagnosis")
+    """, unsafe_allow_html=True)
+
+# =====================================================
+# PREDICTION LOGIC
+# =====================================================
 
 if predict:
 
-    sex_m = 1 if sex == "Male" else 0
+    with st.spinner("Analyzing patient data..."):
 
-    chest_ata = 1 if chest_pain == "ATA" else 0
-    chest_nap = 1 if chest_pain == "NAP" else 0
-    chest_ta = 1 if chest_pain == "TA" else 0
+        # -----------------------
+        # One-Hot Encoding
+        # -----------------------
 
-    ecg_normal = 1 if resting_ecg == "Normal" else 0
-    ecg_st = 1 if resting_ecg == "ST" else 0
+        sex_m = 1 if sex == "Male" else 0
 
-    exercise_y = 1 if exercise_angina == "Yes" else 0
+        chest_ata = 1 if chest_pain == "ATA" else 0
+        chest_nap = 1 if chest_pain == "NAP" else 0
+        chest_ta = 1 if chest_pain == "TA" else 0
 
-    slope_flat = 1 if st_slope == "Flat" else 0
-    slope_up = 1 if st_slope == "Up" else 0
+        ecg_normal = 1 if resting_ecg == "Normal" else 0
+        ecg_st = 1 if resting_ecg == "ST" else 0
 
-    input_data = pd.DataFrame({
+        exercise_y = 1 if exercise_angina == "Yes" else 0
 
-        "Age":[age],
-        "RestingBP":[resting_bp],
-        "Cholesterol":[cholesterol],
-        "FastingBS":[int(fasting_bs)],
-        "MaxHR":[max_hr],
-        "Oldpeak":[oldpeak],
+        slope_flat = 1 if st_slope == "Flat" else 0
+        slope_up = 1 if st_slope == "Up" else 0
 
-        "Sex_M":[sex_m],
+        # -----------------------
+        # Model Input
+        # -----------------------
 
-        "ChestPainType_ATA":[chest_ata],
-        "ChestPainType_NAP":[chest_nap],
-        "ChestPainType_TA":[chest_ta],
+        input_data = pd.DataFrame({
 
-        "RestingECG_Normal":[ecg_normal],
-        "RestingECG_ST":[ecg_st],
+            "Age":[age],
+            "RestingBP":[resting_bp],
+            "Cholesterol":[cholesterol],
+            "FastingBS":[int(fasting_bs)],
+            "MaxHR":[max_hr],
+            "Oldpeak":[oldpeak],
 
-        "ExerciseAngina_Y":[exercise_y],
+            "Sex_M":[sex_m],
 
-        "ST_Slope_Flat":[slope_flat],
-        "ST_Slope_Up":[slope_up]
+            "ChestPainType_ATA":[chest_ata],
+            "ChestPainType_NAP":[chest_nap],
+            "ChestPainType_TA":[chest_ta],
 
-    })
+            "RestingECG_Normal":[ecg_normal],
+            "RestingECG_ST":[ecg_st],
 
-    scaled_data = scaler.transform(input_data)
+            "ExerciseAngina_Y":[exercise_y],
 
-    prediction = model.predict(scaled_data)[0]
-    probability = model.predict_proba(scaled_data)[0][1]
+            "ST_Slope_Flat":[slope_flat],
+            "ST_Slope_Up":[slope_up]
 
+        })
+
+        # -----------------------
+        # Scaling
+        # -----------------------
+
+        scaled_data = scaler.transform(input_data)
+
+        # -----------------------
+        # Prediction
+        # -----------------------
+
+        prediction = model.predict(scaled_data)[0]
+
+        probability = model.predict_proba(scaled_data)[0][1]
+
+        risk_score = probability * 100
+        health_score = (1 - probability) * 100
+
+# =====================================================
+# RESULT DASHBOARD
+# =====================================================
 
 with right:
 
@@ -358,225 +486,293 @@ with right:
 
     if predict:
 
-        if prediction == 1:
+        # -----------------------------
+        # Probability
+        # -----------------------------
 
-            st.error("🚨 High Risk of Heart Disease")
+        st.subheader("📊 Risk Probability")
 
-            st.progress(int(probability*100))
+        st.progress(float(probability))
 
-            st.metric(
-                "Risk Score",
-                f"{probability*100:.1f}%"
-            )
+        st.write(f"### {risk_score:.1f}%")
 
-            st.warning(
-                "Please consult a cardiologist for further evaluation."
-            )
+        # -----------------------------
+        # Risk Level
+        # -----------------------------
 
-            st.snow()
+        if probability < 0.30:
+
+            st.success("🟢 LOW RISK")
+
+        elif probability < 0.70:
+
+            st.warning("🟡 MODERATE RISK")
 
         else:
 
-            st.success("🎉 Low Risk of Heart Disease")
+            st.error("🔴 HIGH RISK")
 
-            st.progress(int((1-probability)*100))
+        st.markdown("---")
+
+        # -----------------------------
+        # Prediction
+        # -----------------------------
+
+        if prediction == 1:
+
+            st.error("## 🚨 High Risk of Heart Disease")
 
             st.metric(
-                "Heart Health",
-                f"{(1-probability)*100:.1f}%"
+                "Risk Score",
+                f"{risk_score:.1f}%"
+            )
+
+            st.warning(
+                "Please consult a Cardiologist for further medical evaluation."
+            )
+
+            st.toast("🚨 High Risk Detected")
+
+            st.snow()
+
+            st.error("""
+
+### 🚑 Recommendation
+
+- Visit a Cardiologist
+
+- ECG Test
+
+- Blood Test
+
+- Follow Doctor's Advice
+
+- Maintain a Healthy Lifestyle
+
+""")
+
+        else:
+
+            st.success("## 🎉 Low Risk of Heart Disease")
+
+            st.metric(
+                "Heart Health Score",
+                f"{health_score:.1f}%"
             )
 
             st.success(
-                "Maintain a healthy lifestyle!"
+                "Your prediction indicates a low risk of heart disease."
             )
 
             st.balloons()
 
-    else:
+            st.toast("❤️ Low Risk")
 
-        st.info("Fill all details and click **Run Diagnosis**.")
+            st.success("""
 
-with st.sidebar:
+### ❤️ Recommendation
 
-    st.image(
-        "https://cdn-icons-png.flaticon.com/512/2966/2966485.png",
-        width=100
-    )
+- Eat a Healthy Diet
 
-    st.title("Heart AI")
+- Exercise Regularly
 
-    st.markdown("---")
+- Sleep 7–8 Hours
 
-    st.info(
-        """
-        **Heart Disease Prediction**
+- Avoid Smoking
 
-        ✔ Machine Learning
+- Annual Health Checkup
 
-        ✔ KNN Classifier
+""")
 
-        ✔ Clinical Support
+else:
 
-        ✔ Instant Prediction
-        """
-    )
+    st.info("👈 Enter patient details and click **Run Diagnosis**.")
 
-    st.markdown("---")
-
-    st.success("Version 1.0")
-
-m1,m2,m3,m4=st.columns(4)
-
-m1.metric(
-    "Patients",
-    "918"
-)
-
-m2.metric(
-    "Model",
-    "KNN"
-)
-
-m3.metric(
-    "Accuracy",
-    "87%"
-)
-
-m4.metric(
-    "Status",
-    "Online"
-)
-
-with st.expander("👤 Patient Profile",expanded=True):
-
-    # age
-
-    # gender
-
-    # chest pain
-
-    # ecg
-
-with st.expander("🩺 Vital Signs",expanded=True):
-
-    # bp
-
-    # cholesterol
-
-    # fasting
-
-with st.expander("📈 Cardiac Tests",expanded=True):
-
-    # maxhr
-
-    # oldpeak
-
-    # slope
-
-    # angina
+# =====================================================
+# PATIENT SUMMARY
+# =====================================================
 
 if predict:
 
-    probability=model.predict_proba(scaled_data)[0][1]
+    st.markdown("---")
 
-    st.write("### Risk Probability")
+    st.subheader("📋 Patient Summary")
 
-    st.progress(probability)
+    summary = pd.DataFrame({
 
-    st.write(f"### {probability*100:.1f}%")
+        "Feature":[
 
-st.success("""
+            "Age",
 
-### Recommendation
+            "Gender",
 
-🥗 Healthy Diet
+            "Blood Pressure",
 
-🏃 Regular Exercise
+            "Cholesterol",
 
-😴 Sleep 7–8 Hours
+            "Maximum Heart Rate",
 
-🩺 Annual Checkup
+            "OldPeak",
 
+            "Exercise Angina"
+
+        ],
+
+        "Value":[
+
+            age,
+
+            sex,
+
+            resting_bp,
+
+            cholesterol,
+
+            max_hr,
+
+            oldpeak,
+
+            exercise_angina
+
+        ]
+
+    })
+
+    st.table(summary)
+
+# =====================================================
+# MODEL INFORMATION
+# =====================================================
+
+st.markdown("---")
+
+c1, c2, c3 = st.columns(3)
+
+with c1:
+
+    st.metric("Algorithm", "KNN")
+
+with c2:
+
+    st.metric("Features", "15")
+
+with c3:
+
+    st.metric("Prediction", "Instant")
+
+
+# =====================================================
+# DOWNLOAD REPORT
+# =====================================================
+
+if predict:
+
+    report = f"""
+=========================================
+ HEART DISEASE PREDICTION REPORT
+=========================================
+
+Patient Details
+-------------------------
+Age                 : {age}
+Gender              : {sex}
+
+Resting BP          : {resting_bp}
+Cholesterol         : {cholesterol}
+
+Maximum Heart Rate  : {max_hr}
+OldPeak             : {oldpeak}
+
+Fasting Blood Sugar : {"Yes" if fasting_bs else "No"}
+
+Chest Pain Type     : {chest_pain}
+Resting ECG         : {resting_ecg}
+Exercise Angina     : {exercise_angina}
+ST Slope            : {st_slope}
+
+=========================================
+
+Prediction
+
+{"HIGH RISK OF HEART DISEASE" if prediction==1 else "LOW RISK OF HEART DISEASE"}
+
+Risk Probability
+
+{risk_score:.2f} %
+
+Heart Health Score
+
+{health_score:.2f} %
+
+=========================================
+
+This prediction is generated using a
+Machine Learning KNN model.
+
+This application is intended only for
+educational purposes and should not be
+used as a medical diagnosis.
+
+=========================================
+"""
+
+    st.download_button(
+        label="📄 Download Prediction Report",
+        data=report,
+        file_name="Heart_Disease_Report.txt",
+        mime="text/plain"
+    )
+
+# =====================================================
+# CURRENT DATE & TIME
+# =====================================================
+
+from datetime import datetime
+
+st.markdown("---")
+
+st.write(
+    "🕒 Prediction Time :",
+    datetime.now().strftime("%d-%m-%Y %I:%M:%S %p")
+)
+
+# =====================================================
+# DISCLAIMER
+# =====================================================
+
+st.warning("""
+### ⚠ Medical Disclaimer
+
+This application is developed for educational purposes only.
+
+The prediction generated by this model should NOT be considered
+a medical diagnosis.
+
+Always consult a qualified healthcare professional for proper
+medical advice and treatment.
 """)
 
-st.error("""
-
-### Recommendation
-
-🚑 Visit Cardiologist
-
-💊 Follow Doctor Advice
-
-🩺 ECG Test
-
-🧪 Blood Test
-
-❤️ Lifestyle Changes
-
-""")
+# =====================================================
+# FOOTER
+# =====================================================
 
 st.markdown("---")
 
 st.markdown(
 """
-<center>
+<div style='text-align:center;'>
 
-### ❤️ Heart Disease Prediction
+<h3>❤️ Heart Disease Prediction System</h3>
 
 Developed using
 
-Python • Streamlit • Scikit-Learn
+<b>Python • Streamlit • Scikit-Learn • Pandas • NumPy</b>
+
+<br><br>
 
 © 2026 Ankit Rai
 
-</center>
-
+</div>
 """,
 unsafe_allow_html=True
 )
-
-with st.spinner("Analyzing patient data..."):
-
-    scaled=scaler.transform(input_data)
-
-    prediction=model.predict(scaled)
-
-st.balloons()
-
-st.toast("Patient appears to be at low risk ❤️")
-
-
-st.toast("High Risk Detected 🚨")
-
-st.markdown("## Patient Summary")
-
-summary=pd.DataFrame({
-
-"Feature":[
-
-"Age",
-
-"Blood Pressure",
-
-"Cholesterol",
-
-"Max HR"
-
-],
-
-"Value":[
-
-age,
-
-resting_bp,
-
-cholesterol,
-
-max_hr
-
-]
-
-})
-
-st.table(summary)
-
