@@ -486,74 +486,45 @@ with right:
 
     if predict:
 
-        # -----------------------------
-        # Probability
-        # -----------------------------
-
         st.subheader("📊 Risk Probability")
-
         st.progress(float(probability))
-
         st.write(f"### {risk_score:.1f}%")
 
-        # -----------------------------
-        # Risk Level
-        # -----------------------------
-
         if probability < 0.30:
-
             st.success("🟢 LOW RISK")
-
         elif probability < 0.70:
-
             st.warning("🟡 MODERATE RISK")
-
         else:
-
             st.error("🔴 HIGH RISK")
 
         st.markdown("---")
 
-        # -----------------------------
-        # Prediction
-        # -----------------------------
-
         if prediction == 1:
 
-            st.error("## 🚨 High Risk of Heart Disease")
+            st.error("🚨 High Risk of Heart Disease")
 
-            st.metric(
-                "Risk Score",
-                f"{risk_score:.1f}%"
-            )
+            st.metric("Risk Score", f"{risk_score:.1f}%")
 
             st.warning(
                 "Please consult a Cardiologist for further medical evaluation."
             )
 
             st.toast("🚨 High Risk Detected")
-
             st.snow()
 
             st.error("""
-
 ### 🚑 Recommendation
 
 - Visit a Cardiologist
-
 - ECG Test
-
 - Blood Test
-
 - Follow Doctor's Advice
-
 - Maintain a Healthy Lifestyle
-
 """)
 
         else:
 
-            st.success("## 🎉 Low Risk of Heart Disease")
+            st.success("🎉 Low Risk of Heart Disease")
 
             st.metric(
                 "Heart Health Score",
@@ -565,27 +536,20 @@ with right:
             )
 
             st.balloons()
-
             st.toast("❤️ Low Risk")
 
             st.success("""
-
 ### ❤️ Recommendation
 
 - Eat a Healthy Diet
-
 - Exercise Regularly
-
 - Sleep 7–8 Hours
-
 - Avoid Smoking
-
 - Annual Health Checkup
-
 """)
 
-else:
-    st.info("👈 Enter patient details and click **Run Diagnosis**.")
+    else:
+        st.info("👈 Enter patient details and click **Run Diagnosis**.")
 
 # =====================================================
 # PATIENT SUMMARY
