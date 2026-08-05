@@ -737,20 +737,6 @@ if predict:
 
 st.markdown("---")
 
-c1, c2, c3 = st.columns(3)
-
-with c1:
-
-    st.metric("Algorithm", "KNN")
-
-with c2:
-
-    st.metric("Features", "15")
-
-with c3:
-
-    st.metric("Prediction", "Instant")
-
 
 # =====================================================
 # DOWNLOAD REPORT
@@ -810,7 +796,7 @@ used as a medical diagnosis.
     st.download_button(
         label="📄 Download Prediction Report",
         data=report,
-        file_name="Heart_Disease_Report.txt",
+        file_name="Heart_Disease_Report.pdf",
         mime="text/plain"
     )
 
