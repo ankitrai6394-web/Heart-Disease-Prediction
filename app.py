@@ -17,8 +17,8 @@ st.set_page_config(
 # LOAD MODEL
 # ==============================
 
-model = pickle.load(open("knn_heart_model.pkl", "rb"))
-scaler = pickle.load(open("heart_scaler.pkl", "rb"))
+model = joblib.load("knn_heart_model.pkl")
+scaler = joblib.load("heart_scaler.pkl")
 
 # ==============================
 # CUSTOM CSS
