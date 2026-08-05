@@ -162,7 +162,7 @@ div.stButton>button{
 
     border-radius:12px;
 
-    background:#06382d;
+    background:grey;
 
     color:white;
 
@@ -283,14 +283,6 @@ with st.sidebar:
     st.info("K-Nearest Neighbors")
 
     st.write("### Technology")
-
-    st.write("""
-- Python
-- Streamlit
-- Scikit-Learn
-- Pandas
-- NumPy
-""")
 
     st.markdown("---")
 
@@ -796,7 +788,7 @@ used as a medical diagnosis.
     st.download_button(
         label="📄 Download Prediction Report",
         data=report,
-        file_name="Heart_Disease_Report.pdf",
+        file_name="Heart_Disease_Report.txt",
         mime="text/plain"
     )
 
