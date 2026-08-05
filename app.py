@@ -585,7 +585,6 @@ with right:
 """)
 
 else:
-
     st.info("👈 Enter patient details and click **Run Diagnosis**.")
 
 # =====================================================
