@@ -176,7 +176,7 @@ div.stButton>button{
 
 div.stButton>button:hover{
 
-    background:#0b6856;
+    background:sky blue;
 
     color:white;
 
