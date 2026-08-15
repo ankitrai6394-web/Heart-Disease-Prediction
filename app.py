@@ -19,25 +19,26 @@ st.set_page_config(
 # CUSTOM MEDICAL WEBSITE DESIGN
 # =========================================================
 
-st.markdown("""
+import base64
+
+with open("medical_bg.png", "rb") as image_file:
+    encoded_image = base64.b64encode(image_file.read()).decode()
+
+
+st.markdown(f"""
 <style>
+.stApp {{
+    background-image:
+        linear-gradient(
+            rgba(235, 246, 255, 0.88),
+            rgba(248, 252, 255, 0.94)
+        ),
+        url("data:image/png;base64,{encoded_image}");
 
-    /* -----------------------------------------------------
-       BACKGROUND IMAGE
-       ----------------------------------------------------- */
-
-    .stApp {
-        background-image:
-            linear-gradient(
-                rgba(235, 246, 255, 0.88),
-                rgba(248, 252, 255, 0.94)
-            ),
-            url("medical_bg.png");
-
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-    }
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}}
 
 
     /* -----------------------------------------------------
