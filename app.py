@@ -16,6 +16,19 @@ st.set_page_config(
     layout="wide"
 )
 
+st.markdown("""
+<style>
+    .stApp {
+        background: linear-gradient(
+            135deg,
+            #e8f5e9,
+            #ffffff,
+            #ffebee
+        );
+    }
+</style>
+""", unsafe_allow_html=True)
+
 st.title("❤️ Heart Disease Prediction System")
 st.write("Enter patient details below")
 
