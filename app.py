@@ -25,6 +25,7 @@ try:
         encoded_image = base64.b64encode(
             image_file.read()
         ).decode()
+
 except FileNotFoundError:
     encoded_image = ""
 
@@ -35,288 +36,352 @@ except FileNotFoundError:
 
 st.markdown(
     f"""
-    <style>
+<style>
 
-        /* =================================================
-           PAGE BACKGROUND
-           ================================================= */
+/* =======================================================
+   MAIN APPLICATION BACKGROUND
+   ======================================================= */
 
-        .stApp {{
-            background:
-                linear-gradient(
-                    rgba(235, 246, 255, 0.88),
-                    rgba(248, 252, 255, 0.94)
-                )
-                url("data:image/png;base64,{encoded_image}");
+.stApp {{
+    background-image:
+        linear-gradient(
+            rgba(235, 246, 255, 0.82),
+            rgba(248, 252, 255, 0.92)
+        ),
+        url("data:image/png;base64,{encoded_image}");
 
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }}
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 
+    min-height: 100vh;
+}}
 
-        /* =================================================
-           MAIN CONTAINER
-           ================================================= */
 
-        .block-container {{
-            max-width: 1200px;
-            padding-top: 2rem;
-            padding-bottom: 3rem;
-        }}
+/* =======================================================
+   MAIN CONTENT WIDTH
+   ======================================================= */
 
+.block-container {{
+    max-width: 1200px;
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+}}
 
-        /* =================================================
-           TITLE
-           ================================================= */
 
-        h1 {{
-            color: #123b66 !important;
-            text-align: center;
-            font-size: 42px !important;
-            font-weight: 800 !important;
-            margin-bottom: 5px !important;
-        }}
+/* =======================================================
+   TITLE
+   ======================================================= */
 
+h1 {{
+    color: #123b66 !important;
+    text-align: center;
+    font-size: 42px !important;
+    font-weight: 800 !important;
+    margin-bottom: 5px !important;
+}}
 
-        .subtitle {{
-            text-align: center;
-            color: #55708c !important;
-            font-size: 18px;
-            margin-bottom: 30px;
-        }}
 
+/* =======================================================
+   SUBTITLE
+   ======================================================= */
 
-        /* =================================================
-           HEADINGS
-           ================================================= */
+.subtitle {{
+    text-align: center;
+    color: #55708c !important;
+    font-size: 18px;
+    margin-bottom: 28px;
+}}
 
-        h2 {{
-            color: #174d7a !important;
-        }}
 
-        h3 {{
-            color: #174d7a !important;
-        }}
+/* =======================================================
+   HEADINGS
+   ======================================================= */
 
+h2,
+h3 {{
+    color: #174d7a !important;
+}}
 
-        /* =================================================
-           NORMAL TEXT
-           ================================================= */
 
-        p {{
-            color: #263b50 !important;
-        }}
+/* =======================================================
+   NORMAL TEXT
+   ======================================================= */
 
+p {{
+    color: #263b50 !important;
+}}
 
-        /* =================================================
-           INPUT LABELS
-           ================================================= */
 
-        [data-testid="stWidgetLabel"] p {{
-            color: #183b5b !important;
-            font-weight: 700 !important;
-            font-size: 15px !important;
-        }}
+/* =======================================================
+   INPUT LABELS
+   ======================================================= */
 
+[data-testid="stWidgetLabel"] p {{
+    color: #173e63 !important;
+    font-weight: 700 !important;
+    font-size: 15px !important;
+}}
 
-        /* =================================================
-           NUMBER INPUT
-           ================================================= */
 
-        div[data-baseweb="input"] {{
-            background-color: rgba(255, 255, 255, 0.97) !important;
-            border: 1px solid #c9d9e8 !important;
-            border-radius: 10px !important;
-        }}
+/* =======================================================
+   NUMBER INPUT CONTAINER
+   ======================================================= */
 
-        div[data-baseweb="input"] input {{
-            color: #162b40 !important;
-            background-color: transparent !important;
-            font-size: 16px !important;
-        }}
+div[data-baseweb="input"] {{
+    background-color: #ffffff !important;
 
+    border:
+        1px solid #c5d8e9 !important;
 
-        /* =================================================
-           SELECTBOX
-           ================================================= */
+    border-radius: 10px !important;
+}}
 
-        div[data-baseweb="select"] > div {{
-            background-color: rgba(255, 255, 255, 0.97) !important;
-            border: 1px solid #c9d9e8 !important;
-            border-radius: 10px !important;
-        }}
 
-        div[data-baseweb="select"] span {{
-            color: #162b40 !important;
-        }}
+/* Number input text */
 
+div[data-baseweb="input"] input {{
+    color: #14283d !important;
+    background-color: #ffffff !important;
 
-        /* =================================================
-           DROPDOWN MENU
-           ================================================= */
+    font-size: 16px !important;
+}}
 
-        ul[role="listbox"] {{
-            background-color: #ffffff !important;
-        }}
 
-        li[role="option"] {{
-            color: #162b40 !important;
-            background-color: #ffffff !important;
-        }}
+/* Number input buttons */
 
-        li[role="option"]:hover {{
-            background-color: #e8f3ff !important;
-            color: #125da0 !important;
-        }}
+div[data-baseweb="input"] button {{
+    color: #173e63 !important;
+}}
 
 
-        /* =================================================
-           PREDICT BUTTON
-           ================================================= */
+/* =======================================================
+   SELECT BOX
+   ======================================================= */
 
-        .stButton {{
-            display: flex;
-            justify-content: center;
-            margin-top: 25px;
-        }}
+div[data-baseweb="select"] > div {{
+    background-color: #ffffff !important;
 
-        .stButton > button {{
-            width: 320px !important;
-            height: 55px !important;
+    border:
+        1px solid #c5d8e9 !important;
 
-            background: linear-gradient(
-                90deg,
-                #1671c4,
-                #0b5ca8
-            ) !important;
+    border-radius: 10px !important;
+}}
 
-            color: white !important;
-            border: none !important;
-            border-radius: 12px !important;
 
-            font-size: 18px !important;
-            font-weight: 700 !important;
+/* Select box text */
 
-            box-shadow:
-                0 6px 18px rgba(0, 91, 160, 0.22);
+div[data-baseweb="select"] span {{
+    color: #14283d !important;
+}}
 
-            transition: all 0.25s ease;
-        }}
 
-        .stButton > button:hover {{
-            background: linear-gradient(
-                90deg,
-                #0b5ca8,
-                #07457f
-            ) !important;
+/* =======================================================
+   DROPDOWN
+   ======================================================= */
 
-            color: white !important;
+ul[role="listbox"] {{
+    background-color: #ffffff !important;
+}}
 
-            transform: translateY(-2px);
+li[role="option"] {{
+    background-color: #ffffff !important;
+    color: #14283d !important;
+}}
 
-            box-shadow:
-                0 9px 22px rgba(0, 91, 160, 0.30);
-        }}
+li[role="option"]:hover {{
+    background-color: #e8f3ff !important;
+    color: #125da0 !important;
+}}
 
 
-        /* =================================================
-           INPUT CARD
-           ================================================= */
+/* =======================================================
+   INPUT CARD
+   ======================================================= */
 
-        .input-card {{
-            background: rgba(255, 255, 255, 0.90);
-            border-radius: 18px;
+.input-card {{
+    background: rgba(255, 255, 255, 0.93);
 
-            padding: 25px;
+    border:
+        1px solid #d7e6f2;
 
-            margin-top: 20px;
+    border-radius: 18px;
 
-            box-shadow:
-                0 8px 30px rgba(37, 76, 110, 0.10);
+    padding: 25px;
 
-            border:
-                1px solid rgba(208, 225, 239, 0.85);
-        }}
+    margin-top: 15px;
 
+    box-shadow:
+        0 8px 30px rgba(37, 76, 110, 0.12);
+}}
 
-        /* =================================================
-           MEDICAL NOTE
-           ================================================= */
 
-        .medical-note {{
-            background: rgba(255, 255, 255, 0.94);
+/* =======================================================
+   BUTTON CONTAINER
+   ======================================================= */
 
-            border:
-                1px solid #d6e5f2;
+.stButton {{
+    display: flex;
+    justify-content: center;
 
-            border-left:
-                5px solid #1976c9;
+    margin-top: 28px;
+}}
 
-            border-radius: 12px;
 
-            padding: 18px 22px;
+/* =======================================================
+   PREDICT BUTTON
+   ======================================================= */
 
-            margin-top: 30px;
+.stButton > button {{
+    width: 320px !important;
+    height: 55px !important;
 
-            box-shadow:
-                0 5px 18px rgba(34, 79, 112, 0.08);
-        }}
+    background:
+        linear-gradient(
+            90deg,
+            #1671c4,
+            #0b5ca8
+        ) !important;
 
+    color: #ffffff !important;
 
-        .medical-note-title {{
-            color: #125ca0 !important;
-            font-size: 18px;
-            font-weight: 800;
-            margin-bottom: 8px;
-        }}
+    border: none !important;
 
+    border-radius: 12px !important;
 
-        .medical-note-text {{
-            color: #52687b !important;
-            font-size: 15px;
-            line-height: 1.6;
-        }}
+    font-size: 18px !important;
 
+    font-weight: 700 !important;
 
-        /* =================================================
-           ALERT MESSAGES
-           ================================================= */
+    box-shadow:
+        0 6px 18px rgba(0, 91, 160, 0.25);
 
-        [data-testid="stAlert"] {{
-            border-radius: 12px !important;
-        }}
+    transition:
+        all 0.25s ease;
+}}
 
-        [data-testid="stAlert"] p {{
-            font-weight: 700 !important;
-        }}
 
+/* Button text */
 
-        /* =================================================
-           MOBILE RESPONSIVE
-           ================================================= */
+.stButton > button p {{
+    color: #ffffff !important;
+}}
 
-        @media (max-width: 768px) {{
+.stButton > button span {{
+    color: #ffffff !important;
+}}
 
-            h1 {{
-                font-size: 30px !important;
-            }}
 
-            .subtitle {{
-                font-size: 16px;
-            }}
+/* Button hover */
 
-            .stButton > button {{
-                width: 100% !important;
-            }}
+.stButton > button:hover {{
+    background:
+        linear-gradient(
+            90deg,
+            #0b5ca8,
+            #07457f
+        ) !important;
 
-            .input-card {{
-                padding: 15px;
-            }}
-        }}
+    color: #ffffff !important;
 
-    </style>
-    """,
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 9px 22px rgba(0, 91, 160, 0.30);
+}}
+
+
+/* =======================================================
+   MEDICAL CARD
+   ======================================================= */
+
+.medical-note {{
+    background:
+        rgba(255, 255, 255, 0.95);
+
+    border:
+        1px solid #d6e5f2;
+
+    border-left:
+        5px solid #1976c9;
+
+    border-radius:
+        12px;
+
+    padding:
+        18px 22px;
+
+    margin-top:
+        30px;
+
+    box-shadow:
+        0 5px 18px rgba(34, 79, 112, 0.08);
+}}
+
+
+/* Medical card title */
+
+.medical-note-title {{
+    color: #125ca0 !important;
+
+    font-size: 18px;
+
+    font-weight: 800;
+
+    margin-bottom: 8px;
+}}
+
+
+/* Medical card body */
+
+.medical-note-text {{
+    color: #52687b !important;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+}}
+
+
+/* =======================================================
+   STREAMLIT SUCCESS / ERROR
+   ======================================================= */
+
+[data-testid="stAlert"] {{
+    border-radius: 12px !important;
+}}
+
+[data-testid="stAlert"] p {{
+    font-weight: 700 !important;
+}}
+
+
+/* =======================================================
+   MOBILE RESPONSIVE
+   ======================================================= */
+
+@media (max-width: 768px) {{
+
+    h1 {{
+        font-size: 30px !important;
+    }}
+
+    .subtitle {{
+        font-size: 16px;
+    }}
+
+    .input-card {{
+        padding: 15px;
+    }}
+
+    .stButton > button {{
+        width: 100% !important;
+    }}
+
+}}
+
+</style>
+""",
     unsafe_allow_html=True
 )
 
@@ -326,6 +391,7 @@ st.markdown(
 # =========================================================
 
 model = joblib.load("knn_heart_model.pkl")
+
 scaler = joblib.load("heart_scaler.pkl")
 
 
@@ -359,7 +425,7 @@ st.markdown("### 🩺 Patient Information")
 
 
 # =========================================================
-# FIRST TWO COLUMNS
+# COLUMN 1 AND COLUMN 2
 # =========================================================
 
 col1, col2 = st.columns(2)
@@ -395,7 +461,8 @@ with col1:
     fasting_bs = st.selectbox(
         "Fasting Blood Sugar > 120 mg/dl",
         [0, 1],
-        format_func=lambda x: "Yes" if x == 1 else "No"
+        format_func=lambda x:
+        "Yes" if x == 1 else "No"
     )
 
 
@@ -437,6 +504,8 @@ with col2:
 col3, col4, col5 = st.columns(3)
 
 
+# Resting ECG
+
 with col3:
 
     rest_ecg = st.selectbox(
@@ -444,6 +513,8 @@ with col3:
         ["LVH", "Normal", "ST"]
     )
 
+
+# Exercise Angina
 
 with col4:
 
@@ -453,6 +524,8 @@ with col4:
     )
 
 
+# ST Slope
+
 with col5:
 
     st_slope = st.selectbox(
@@ -461,6 +534,8 @@ with col5:
     )
 
 
+# Close input card
+
 st.markdown(
     '</div>',
     unsafe_allow_html=True
@@ -468,12 +543,17 @@ st.markdown(
 
 
 # =========================================================
-# PREDICT BUTTON
+# PREDICTION
 # =========================================================
 
 if st.button("❤️  Predict Heart Disease"):
 
+    # -----------------------------------------------------
+    # PREPARE DATA
+    # -----------------------------------------------------
+
     data = {
+
         "Age": age,
 
         "RestingBP": resting_bp,
@@ -515,29 +595,29 @@ if st.button("❤️  Predict Heart Disease"):
     }
 
 
-    # =====================================================
-    # DATAFRAME
-    # =====================================================
+    # -----------------------------------------------------
+    # CREATE DATAFRAME
+    # -----------------------------------------------------
 
     df = pd.DataFrame([data])
 
 
-    # =====================================================
+    # -----------------------------------------------------
     # SCALE DATA
-    # =====================================================
+    # -----------------------------------------------------
 
     scaled_data = scaler.transform(df)
 
 
-    # =====================================================
+    # -----------------------------------------------------
     # MODEL PREDICTION
-    # =====================================================
+    # -----------------------------------------------------
 
     prediction = model.predict(scaled_data)[0]
 
 
     # =====================================================
-    # HIGH RISK
+    # HIGH RISK RESULT
     # =====================================================
 
     if prediction == 1:
@@ -546,32 +626,33 @@ if st.button("❤️  Predict Heart Disease"):
             "💔 High Risk of Heart Disease ⚠️"
         )
 
+
         st.markdown(
             """
-            <div class="medical-note">
+<div class="medical-note">
 
-                <div class="medical-note-title">
-                    ⚠️ Important Result
-                </div>
+<div class="medical-note-title">
+⚠️ Important Result
+</div>
 
-                <div class="medical-note-text">
-                    The machine-learning model indicates a potentially
-                    elevated risk based on the information entered.
-                    This result is for educational and screening purposes
-                    only and is not a medical diagnosis.
-                    Please consult a qualified healthcare professional.
-                </div>
+<div class="medical-note-text">
+The machine-learning model indicates a potentially elevated
+risk based on the information provided. This result is for
+educational and screening purposes only and is not a medical
+diagnosis. Please consult a qualified healthcare professional.
+</div>
 
-            </div>
-            """,
+</div>
+""",
             unsafe_allow_html=True
         )
+
 
         st.snow()
 
 
     # =====================================================
-    # LOW RISK
+    # LOW RISK RESULT
     # =====================================================
 
     else:
@@ -580,48 +661,50 @@ if st.button("❤️  Predict Heart Disease"):
             "✅ Low Risk of Heart Disease"
         )
 
+
         st.markdown(
             """
-            <div class="medical-note">
+<div class="medical-note">
 
-                <div class="medical-note-title">
-                    ✅ Screening Result
-                </div>
+<div class="medical-note-title">
+✅ Screening Result
+</div>
 
-                <div class="medical-note-text">
-                    Based on the information provided, the model predicts
-                    a lower risk of heart disease. This result is only a
-                    machine-learning screening result and does not replace
-                    professional medical evaluation.
-                </div>
+<div class="medical-note-text">
+Based on the information provided, the model predicts a lower
+risk of heart disease. This is only a machine-learning
+screening result and does not replace professional medical
+evaluation.
+</div>
 
-            </div>
-            """,
+</div>
+""",
             unsafe_allow_html=True
         )
+
 
         st.balloons()
 
 
 # =========================================================
-# FOOTER / DISCLAIMER
+# MEDICAL DISCLAIMER
 # =========================================================
 
 st.markdown(
     """
-    <div class="medical-note">
+<div class="medical-note">
 
-        <div class="medical-note-title">
-            🩺 Medical Disclaimer
-        </div>
+<div class="medical-note-title">
+🩺 Medical Disclaimer
+</div>
 
-        <div class="medical-note-text">
-            This application is intended for educational and screening
-            purposes only. It does not provide a medical diagnosis,
-            treatment plan, or emergency medical advice.
-        </div>
+<div class="medical-note-text">
+This application is intended for educational and screening
+purposes only. It does not provide a medical diagnosis,
+treatment plan, or emergency medical advice.
+</div>
 
-    </div>
-    """,
+</div>
+""",
     unsafe_allow_html=True
 )
