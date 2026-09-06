@@ -31,6 +31,14 @@ except FileNotFoundError:
 
 
 # =========================================================
+# LOAD MODEL AND SCALER
+# =========================================================
+
+model = joblib.load("knn_heart_model.pkl")
+scaler = joblib.load("heart_scaler.pkl")
+
+
+# =========================================================
 # CUSTOM CSS
 # =========================================================
 
@@ -39,14 +47,14 @@ st.markdown(
 <style>
 
 /* =======================================================
-   MAIN APPLICATION BACKGROUND
+   MAIN BACKGROUND
    ======================================================= */
 
 .stApp {{
     background-image:
         linear-gradient(
             rgba(235, 246, 255, 0.82),
-            rgba(248, 252, 255, 0.92)
+            rgba(248, 252, 255, 0.93)
         ),
         url("data:image/png;base64,{encoded_image}");
 
@@ -59,26 +67,33 @@ st.markdown(
 
 
 /* =======================================================
-   MAIN CONTENT WIDTH
+   MAIN CONTENT
    ======================================================= */
 
 .block-container {{
     max-width: 1200px;
+
     padding-top: 2rem;
     padding-bottom: 3rem;
 }}
 
 
 /* =======================================================
-   TITLE
+   HEADER
    ======================================================= */
 
 h1 {{
     color: #123b66 !important;
+
     text-align: center;
+
     font-size: 42px !important;
+
     font-weight: 800 !important;
+
     margin-bottom: 5px !important;
+
+    letter-spacing: -0.5px;
 }}
 
 
@@ -88,9 +103,14 @@ h1 {{
 
 .subtitle {{
     text-align: center;
+
     color: #55708c !important;
+
     font-size: 18px;
-    margin-bottom: 28px;
+
+    font-weight: 500;
+
+    margin-bottom: 22px;
 }}
 
 
@@ -114,44 +134,191 @@ p {{
 
 
 /* =======================================================
+   CLINICAL ASSESSMENT BAR
+   ======================================================= */
+
+.assessment-bar {{
+    background: rgba(255, 255, 255, 0.94);
+
+    border: 1px solid #d7e6f2;
+
+    border-left: 5px solid #1976c9;
+
+    border-radius: 14px;
+
+    padding: 14px 20px;
+
+    margin: 10px 0 25px 0;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+
+    box-shadow:
+        0 5px 18px rgba(34, 79, 112, 0.09);
+
+    backdrop-filter: blur(5px);
+}}
+
+
+.assessment-left {{
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}}
+
+
+.assessment-icon {{
+    font-size: 28px;
+
+    line-height: 1;
+}}
+
+
+.assessment-title {{
+    color: #125ca0;
+
+    font-size: 17px;
+
+    font-weight: 800;
+}}
+
+
+.assessment-subtitle {{
+    color: #5a7187;
+
+    font-size: 13px;
+
+    margin-top: 3px;
+}}
+
+
+.assessment-badges {{
+    display: flex;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+
+    justify-content: flex-end;
+}}
+
+
+.assessment-badges span {{
+    background: #eef7ff;
+
+    color: #1769aa;
+
+    border: 1px solid #cfe4f6;
+
+    border-radius: 20px;
+
+    padding: 6px 10px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+}}
+
+
+/* =======================================================
+   PATIENT INFORMATION CARD
+   ======================================================= */
+
+.patient-card {{
+    background: rgba(255, 255, 255, 0.94);
+
+    border: 1px solid #d7e6f2;
+
+    border-radius: 18px;
+
+    padding: 25px;
+
+    margin-top: 10px;
+
+    box-shadow:
+        0 8px 30px rgba(37, 76, 110, 0.12);
+
+    backdrop-filter: blur(6px);
+}}
+
+
+/* =======================================================
+   PATIENT HEADING
+   ======================================================= */
+
+.patient-heading {{
+    color: #125ca0;
+
+    font-size: 27px;
+
+    font-weight: 800;
+
+    margin-bottom: 18px;
+}}
+
+
+/* =======================================================
    INPUT LABELS
    ======================================================= */
 
 [data-testid="stWidgetLabel"] p {{
     color: #173e63 !important;
+
     font-weight: 700 !important;
+
     font-size: 15px !important;
 }}
 
 
 /* =======================================================
-   NUMBER INPUT CONTAINER
+   NUMBER INPUT
    ======================================================= */
 
 div[data-baseweb="input"] {{
     background-color: #ffffff !important;
 
-    border:
-        1px solid #c5d8e9 !important;
+    border: 1px solid #c5d8e9 !important;
 
     border-radius: 10px !important;
 }}
 
 
-/* Number input text */
+div[data-baseweb="input"] > div {{
+    background-color: #ffffff !important;
+}}
+
 
 div[data-baseweb="input"] input {{
-    color: #14283d !important;
     background-color: #ffffff !important;
+
+    color: #14283d !important;
+
+    -webkit-text-fill-color: #14283d !important;
 
     font-size: 16px !important;
 }}
 
 
-/* Number input buttons */
+/* Number input +/- buttons */
 
 div[data-baseweb="input"] button {{
+    background-color: #ffffff !important;
+
     color: #173e63 !important;
+}}
+
+
+div[data-baseweb="input"] button:hover {{
+    background-color: #eaf5ff !important;
 }}
 
 
@@ -159,72 +326,67 @@ div[data-baseweb="input"] button {{
    SELECT BOX
    ======================================================= */
 
+div[data-baseweb="select"] {{
+    background-color: transparent !important;
+}}
+
+
 div[data-baseweb="select"] > div {{
     background-color: #ffffff !important;
 
-    border:
-        1px solid #c5d8e9 !important;
+    border: 1px solid #c5d8e9 !important;
 
     border-radius: 10px !important;
 }}
 
 
-/* Select box text */
-
 div[data-baseweb="select"] span {{
     color: #14283d !important;
+
+    -webkit-text-fill-color: #14283d !important;
+}}
+
+
+div[data-baseweb="select"] input {{
+    color: #14283d !important;
+
+    -webkit-text-fill-color: #14283d !important;
+}}
+
+
+/* Dropdown arrow */
+
+div[data-baseweb="select"] svg {{
+    fill: #173e63 !important;
 }}
 
 
 /* =======================================================
-   DROPDOWN
+   DROPDOWN MENU
    ======================================================= */
 
 ul[role="listbox"] {{
     background-color: #ffffff !important;
+
+    border: 1px solid #c5d8e9 !important;
+
+    border-radius: 10px !important;
 }}
+
 
 li[role="option"] {{
     background-color: #ffffff !important;
+
     color: #14283d !important;
+
+    -webkit-text-fill-color: #14283d !important;
 }}
+
 
 li[role="option"]:hover {{
     background-color: #e8f3ff !important;
+
     color: #125da0 !important;
-}}
-
-
-/* =======================================================
-   INPUT CARD
-   ======================================================= */
-
-.input-card {{
-    background: rgba(255, 255, 255, 0.93);
-
-    border:
-        1px solid #d7e6f2;
-
-    border-radius: 18px;
-
-    padding: 25px;
-
-    margin-top: 15px;
-
-    box-shadow:
-        0 8px 30px rgba(37, 76, 110, 0.12);
-}}
-
-
-/* =======================================================
-   BUTTON CONTAINER
-   ======================================================= */
-
-.stButton {{
-    display: flex;
-    justify-content: center;
-
-    margin-top: 28px;
 }}
 
 
@@ -232,8 +394,20 @@ li[role="option"]:hover {{
    PREDICT BUTTON
    ======================================================= */
 
+.stButton {{
+    display: flex;
+
+    justify-content: center;
+
+    margin-top: 28px;
+
+    margin-bottom: 15px;
+}}
+
+
 .stButton > button {{
     width: 320px !important;
+
     height: 55px !important;
 
     background:
@@ -256,23 +430,23 @@ li[role="option"]:hover {{
     box-shadow:
         0 6px 18px rgba(0, 91, 160, 0.25);
 
-    transition:
-        all 0.25s ease;
+    transition: all 0.25s ease;
 }}
 
-
-/* Button text */
 
 .stButton > button p {{
     color: #ffffff !important;
+
+    -webkit-text-fill-color: #ffffff !important;
 }}
+
 
 .stButton > button span {{
     color: #ffffff !important;
+
+    -webkit-text-fill-color: #ffffff !important;
 }}
 
-
-/* Button hover */
 
 .stButton > button:hover {{
     background:
@@ -282,8 +456,6 @@ li[role="option"]:hover {{
             #07457f
         ) !important;
 
-    color: #ffffff !important;
-
     transform: translateY(-2px);
 
     box-shadow:
@@ -292,34 +464,42 @@ li[role="option"]:hover {{
 
 
 /* =======================================================
-   MEDICAL CARD
+   RESULT ALERT
+   ======================================================= */
+
+[data-testid="stAlert"] {{
+    border-radius: 12px !important;
+
+    margin-top: 20px !important;
+}}
+
+
+[data-testid="stAlert"] p {{
+    font-weight: 700 !important;
+}}
+
+
+/* =======================================================
+   MEDICAL INFORMATION CARD
    ======================================================= */
 
 .medical-note {{
-    background:
-        rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.95);
 
-    border:
-        1px solid #d6e5f2;
+    border: 1px solid #d6e5f2;
 
-    border-left:
-        5px solid #1976c9;
+    border-left: 5px solid #1976c9;
 
-    border-radius:
-        12px;
+    border-radius: 12px;
 
-    padding:
-        18px 22px;
+    padding: 18px 22px;
 
-    margin-top:
-        30px;
+    margin-top: 22px;
 
     box-shadow:
         0 5px 18px rgba(34, 79, 112, 0.08);
 }}
 
-
-/* Medical card title */
 
 .medical-note-title {{
     color: #125ca0 !important;
@@ -332,8 +512,6 @@ li[role="option"]:hover {{
 }}
 
 
-/* Medical card body */
-
 .medical-note-text {{
     color: #52687b !important;
 
@@ -344,20 +522,24 @@ li[role="option"]:hover {{
 
 
 /* =======================================================
-   STREAMLIT SUCCESS / ERROR
+   FOOTER
    ======================================================= */
 
-[data-testid="stAlert"] {{
-    border-radius: 12px !important;
-}}
+.footer {{
+    text-align: center;
 
-[data-testid="stAlert"] p {{
-    font-weight: 700 !important;
+    color: #668096;
+
+    font-size: 12px;
+
+    margin-top: 30px;
+
+    padding-top: 10px;
 }}
 
 
 /* =======================================================
-   MOBILE RESPONSIVE
+   MOBILE
    ======================================================= */
 
 @media (max-width: 768px) {{
@@ -370,7 +552,19 @@ li[role="option"]:hover {{
         font-size: 16px;
     }}
 
-    .input-card {{
+    .assessment-bar {{
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 12px;
+    }}
+
+    .assessment-badges {{
+        justify-content: flex-start;
+    }}
+
+    .patient-card {{
         padding: 15px;
     }}
 
@@ -387,15 +581,6 @@ li[role="option"]:hover {{
 
 
 # =========================================================
-# LOAD MODEL AND SCALER
-# =========================================================
-
-model = joblib.load("knn_heart_model.pkl")
-
-scaler = joblib.load("heart_scaler.pkl")
-
-
-# =========================================================
 # HEADER
 # =========================================================
 
@@ -405,27 +590,80 @@ st.markdown(
 )
 
 st.markdown(
-    '<div class="subtitle">'
-    '🩺 Smart health screening powered by machine learning'
-    '</div>',
+    """
+<div class="subtitle">
+🩺 Smart health screening powered by machine learning
+</div>
+""",
     unsafe_allow_html=True
 )
 
 
 # =========================================================
-# PATIENT INFORMATION CARD
+# CLINICAL ASSESSMENT BAR
 # =========================================================
 
 st.markdown(
-    '<div class="input-card">',
+    """
+<div class="assessment-bar">
+
+    <div class="assessment-left">
+
+        <div class="assessment-icon">
+            🩺
+        </div>
+
+        <div>
+
+            <div class="assessment-title">
+                Clinical Risk Assessment
+            </div>
+
+            <div class="assessment-subtitle">
+                Enter patient information below to estimate heart disease risk
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="assessment-badges">
+
+        <span>✓ AI-Assisted</span>
+
+        <span>✓ Secure Screening</span>
+
+        <span>⚕️ Not a Diagnosis</span>
+
+    </div>
+
+</div>
+""",
     unsafe_allow_html=True
 )
 
-st.markdown("### 🩺 Patient Information")
+
+# =========================================================
+# PATIENT INFORMATION
+# =========================================================
+
+st.markdown(
+    """
+<div class="patient-card">
+
+<div class="patient-heading">
+🩺 Patient Information
+</div>
+
+</div>
+""",
+    unsafe_allow_html=True
+)
 
 
 # =========================================================
-# COLUMN 1 AND COLUMN 2
+# INPUTS - TWO COLUMNS
 # =========================================================
 
 col1, col2 = st.columns(2)
@@ -461,8 +699,7 @@ with col1:
     fasting_bs = st.selectbox(
         "Fasting Blood Sugar > 120 mg/dl",
         [0, 1],
-        format_func=lambda x:
-        "Yes" if x == 1 else "No"
+        format_func=lambda x: "Yes" if x == 1 else "No"
     )
 
 
@@ -483,7 +720,8 @@ with col2:
         "Old Peak",
         min_value=0.0,
         max_value=10.0,
-        value=1.0
+        value=1.0,
+        step=0.1
     )
 
     sex = st.selectbox(
@@ -504,8 +742,6 @@ with col2:
 col3, col4, col5 = st.columns(3)
 
 
-# Resting ECG
-
 with col3:
 
     rest_ecg = st.selectbox(
@@ -513,8 +749,6 @@ with col3:
         ["LVH", "Normal", "ST"]
     )
 
-
-# Exercise Angina
 
 with col4:
 
@@ -524,8 +758,6 @@ with col4:
     )
 
 
-# ST Slope
-
 with col5:
 
     st_slope = st.selectbox(
@@ -534,16 +766,8 @@ with col5:
     )
 
 
-# Close input card
-
-st.markdown(
-    '</div>',
-    unsafe_allow_html=True
-)
-
-
 # =========================================================
-# PREDICTION
+# PREDICTION BUTTON
 # =========================================================
 
 if st.button("❤️  Predict Heart Disease"):
@@ -596,7 +820,7 @@ if st.button("❤️  Predict Heart Disease"):
 
 
     # -----------------------------------------------------
-    # CREATE DATAFRAME
+    # DATAFRAME
     # -----------------------------------------------------
 
     df = pd.DataFrame([data])
@@ -610,14 +834,14 @@ if st.button("❤️  Predict Heart Disease"):
 
 
     # -----------------------------------------------------
-    # MODEL PREDICTION
+    # PREDICTION
     # -----------------------------------------------------
 
     prediction = model.predict(scaled_data)[0]
 
 
     # =====================================================
-    # HIGH RISK RESULT
+    # HIGH RISK
     # =====================================================
 
     if prediction == 1:
@@ -626,20 +850,20 @@ if st.button("❤️  Predict Heart Disease"):
             "💔 High Risk of Heart Disease ⚠️"
         )
 
-
         st.markdown(
             """
 <div class="medical-note">
 
 <div class="medical-note-title">
-⚠️ Important Result
+⚠️ Important Screening Result
 </div>
 
 <div class="medical-note-text">
 The machine-learning model indicates a potentially elevated
 risk based on the information provided. This result is for
 educational and screening purposes only and is not a medical
-diagnosis. Please consult a qualified healthcare professional.
+diagnosis. Please consult a qualified healthcare professional
+for proper evaluation.
 </div>
 
 </div>
@@ -647,12 +871,11 @@ diagnosis. Please consult a qualified healthcare professional.
             unsafe_allow_html=True
         )
 
-
         st.snow()
 
 
     # =====================================================
-    # LOW RISK RESULT
+    # LOW RISK
     # =====================================================
 
     else:
@@ -660,7 +883,6 @@ diagnosis. Please consult a qualified healthcare professional.
         st.success(
             "✅ Low Risk of Heart Disease"
         )
-
 
         st.markdown(
             """
@@ -681,7 +903,6 @@ evaluation.
 """,
             unsafe_allow_html=True
         )
-
 
         st.balloons()
 
@@ -704,6 +925,20 @@ purposes only. It does not provide a medical diagnosis,
 treatment plan, or emergency medical advice.
 </div>
 
+</div>
+""",
+    unsafe_allow_html=True
+)
+
+
+# =========================================================
+# FOOTER
+# =========================================================
+
+st.markdown(
+    """
+<div class="footer">
+HeartCare AI • Machine Learning Based Health Screening
 </div>
 """,
     unsafe_allow_html=True
