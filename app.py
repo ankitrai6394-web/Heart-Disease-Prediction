@@ -45,228 +45,1004 @@ model, scaler, is_fallback = load_ml_pipeline()
 # MODERN GLASSMORPHISM DESIGN SYSTEM (CUSTOM CSS)
 # =========================================================
 st.markdown(f"""
+st.markdown(f"""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
-    html, body, [class*="css"] {{
-        font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
-    }}
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
-    /* Base App Styling */
-    .stApp {{
-        background: linear-gradient(135deg, #f0f7ff 0%, #e6f0fa 50%, #f4f8fc 100%);
-        {f'background-image: linear-gradient(rgba(240, 247, 255, 0.88), rgba(230, 240, 250, 0.94)), url("data:image/png;base64,{encoded_image}");' if encoded_image else ''}
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-        min-height: 100vh;
-    }}
+
+/* =========================================================
+   GLOBAL FONT
+   ========================================================= */
+
+html, body, [class*="css"] {{
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}}
+
+
+/* =========================================================
+   MAIN MEDICAL BACKGROUND
+   ========================================================= */
+
+.stApp {{
+
+    background-color: #eef7ff;
+
+    background-image:
+        linear-gradient(
+            rgba(239, 248, 255, 0.86),
+            rgba(247, 251, 255, 0.94)
+        )
+        {f', url("data:image/png;base64,{encoded_image}")' if encoded_image else ''};
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+    min-height: 100vh;
+
+    transition: background 0.5s ease;
+}}
+
+
+/* =========================================================
+   SUBTLE MEDICAL BACKGROUND GLOW
+   ========================================================= */
+
+.stApp::before {{
+
+    content: "";
+
+    position: fixed;
+
+    width: 500px;
+    height: 500px;
+
+    top: 5%;
+    left: -150px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(37, 99, 235, 0.08),
+            transparent 70%
+        );
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    z-index: 0;
+}}
+
+
+.stApp::after {{
+
+    content: "";
+
+    position: fixed;
+
+    width: 450px;
+    height: 450px;
+
+    bottom: 5%;
+    right: -120px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(220, 38, 38, 0.06),
+            transparent 70%
+        );
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    z-index: 0;
+}}
+
+
+/* =========================================================
+   CONTENT CONTAINER
+   ========================================================= */
+
+.block-container {{
+
+    max-width: 1200px;
+
+    padding-top: 1.8rem;
+    padding-bottom: 3rem;
+
+    position: relative;
+
+    z-index: 1;
+}}
+
+
+/* =========================================================
+   HERO CARD
+   ========================================================= */
+
+.hero-card {{
+
+    background:
+        linear-gradient(
+            135deg,
+            #0f172a 0%,
+            #172554 55%,
+            #1e40af 100%
+        );
+
+    border-radius: 22px;
+
+    padding: 34px 38px;
+
+    color: white;
+
+    margin-bottom: 24px;
+
+    box-shadow:
+        0 20px 35px rgba(15, 23, 42, 0.16);
+
+    position: relative;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
+}}
+
+
+/* HERO HOVER */
+
+.hero-card:hover {{
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 25px 45px rgba(15, 23, 42, 0.22);
+}}
+
+
+/* HERO GLOW */
+
+.hero-card::after {{
+
+    content: "";
+
+    position: absolute;
+
+    top: -100px;
+    right: -80px;
+
+    width: 350px;
+    height: 350px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(239, 68, 68, 0.30),
+            transparent 68%
+        );
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    transition:
+        transform 0.5s ease;
+}}
+
+
+.hero-card:hover::after {{
+
+    transform: scale(1.2);
+}}
+
+
+/* =========================================================
+   HERO TITLE
+   ========================================================= */
+
+.hero-title {{
+
+    font-size: 36px !important;
+
+    font-weight: 800 !important;
+
+    color: #ffffff !important;
+
+    margin: 0 0 7px 0 !important;
+
+    letter-spacing: -0.5px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}}
+
+
+/* =========================================================
+   HERO SUBTITLE
+   ========================================================= */
+
+.hero-subtitle {{
+
+    font-size: 16px;
+
+    color: #cbd5e1;
+
+    font-weight: 500;
+
+    margin: 0;
+}}
+
+
+/* =========================================================
+   HERO TAGS
+   ========================================================= */
+
+.hero-tags {{
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 17px;
+
+    flex-wrap: wrap;
+}}
+
+
+.hero-tag {{
+
+    background:
+        rgba(255,255,255,0.10);
+
+    border:
+        1px solid rgba(255,255,255,0.20);
+
+    backdrop-filter: blur(10px);
+
+    padding:
+        6px 13px;
+
+    border-radius:
+        20px;
+
+    font-size:
+        12px;
+
+    font-weight:
+        600;
+
+    color:
+        #e2e8f0;
+
+    transition:
+        all 0.25s ease;
+}}
+
+
+/* TAG HOVER */
+
+.hero-tag:hover {{
+
+    background:
+        rgba(255,255,255,0.18);
+
+    border-color:
+        rgba(255,255,255,0.35);
+
+    transform:
+        translateY(-2px);
+
+    color:
+        #ffffff;
+}}
+
+
+/* =========================================================
+   STAT CARDS
+   ========================================================= */
+
+.stat-card {{
+
+    background:
+        rgba(255,255,255,0.88);
+
+    backdrop-filter:
+        blur(15px);
+
+    border:
+        1px solid rgba(226,232,240,0.9);
+
+    border-radius:
+        17px;
+
+    padding:
+        17px 20px;
+
+    box-shadow:
+        0 5px 15px rgba(15,23,42,0.04);
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        14px;
+
+    transition:
+        all 0.3s ease;
+}}
+
+
+/* STAT CARD HOVER */
+
+.stat-card:hover {{
+
+    transform:
+        translateY(-5px);
+
+    border-color:
+        #93c5fd;
+
+    box-shadow:
+        0 14px 28px rgba(37,99,235,0.12);
+
+    background:
+        rgba(255,255,255,0.97);
+}}
+
+
+/* =========================================================
+   STAT ICON
+   ========================================================= */
+
+.stat-icon {{
+
+    width:
+        44px;
+
+    height:
+        44px;
+
+    border-radius:
+        12px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    font-size:
+        20px;
+
+    transition:
+        transform 0.3s ease;
+}}
+
+
+.stat-card:hover .stat-icon {{
+
+    transform:
+        scale(1.1)
+        rotate(3deg);
+}}
+
+
+.icon-blue {{
+    background:#eff6ff;
+    color:#2563eb;
+}}
+
+.icon-green {{
+    background:#f0fdf4;
+    color:#16a34a;
+}}
+
+.icon-purple {{
+    background:#faf5ff;
+    color:#9333ea;
+}}
+
+
+/* =========================================================
+   STAT TEXT
+   ========================================================= */
+
+.stat-label {{
+
+    font-size:
+        12px;
+
+    font-weight:
+        700;
+
+    text-transform:
+        uppercase;
+
+    color:
+        #64748b;
+}}
+
+
+.stat-value {{
+
+    font-size:
+        16px;
+
+    font-weight:
+        800;
+
+    color:
+        #0f172a;
+}}
+
+
+/* =========================================================
+   GLASS PANELS
+   ========================================================= */
+
+.glass-panel {{
+
+    background:
+        rgba(255,255,255,0.93);
+
+    backdrop-filter:
+        blur(16px);
+
+    border:
+        1px solid #dbe7f2;
+
+    border-radius:
+        18px;
+
+    padding:
+        24px;
+
+    box-shadow:
+        0 8px 20px rgba(15,23,42,0.05);
+
+    margin-bottom:
+        20px;
+
+    transition:
+        all 0.3s ease;
+}}
+
+
+/* PANEL HOVER */
+
+.glass-panel:hover {{
+
+    transform:
+        translateY(-3px);
+
+    border-color:
+        #93c5fd;
+
+    box-shadow:
+        0 14px 32px rgba(37,99,235,0.10);
+
+    background:
+        rgba(255,255,255,0.97);
+}}
+
+
+/* =========================================================
+   SECTION HEADING
+   ========================================================= */
+
+h3 {{
+
+    color:
+        #123b66 !important;
+
+    font-weight:
+        800 !important;
+}}
+
+
+/* =========================================================
+   INPUT LABELS
+   ========================================================= */
+
+[data-testid="stWidgetLabel"] p {{
+
+    font-weight:
+        700 !important;
+
+    color:
+        #173e63 !important;
+
+    font-size:
+        14px !important;
+
+    transition:
+        color 0.2s ease;
+}}
+
+
+/* =========================================================
+   INPUT BOXES
+   ========================================================= */
+
+div[data-baseweb="input"],
+div[data-baseweb="select"] > div {{
+
+    border-radius:
+        11px !important;
+
+    border:
+        1px solid #cbd5e1 !important;
+
+    background-color:
+        #ffffff !important;
+
+    transition:
+        all 0.25s ease !important;
+
+    box-shadow:
+        0 2px 5px rgba(15,23,42,0.02);
+}}
+
+
+/* =========================================================
+   INPUT HOVER
+   ========================================================= */
+
+div[data-baseweb="input"]:hover,
+div[data-baseweb="select"] > div:hover {{
+
+    border-color:
+        #60a5fa !important;
+
+    box-shadow:
+        0 0 0 3px rgba(59,130,246,0.08) !important;
+
+    transform:
+        translateY(-1px);
+}}
+
+
+/* =========================================================
+   INPUT FOCUS
+   ========================================================= */
+
+div[data-baseweb="input"]:focus-within {{
+
+    border-color:
+        #2563eb !important;
+
+    box-shadow:
+        0 0 0 3px rgba(37,99,235,0.12) !important;
+}}
+
+
+/* =========================================================
+   INPUT TEXT
+   ========================================================= */
+
+div[data-baseweb="input"] input {{
+
+    color:
+        #0f172a !important;
+
+    background:
+        #ffffff !important;
+
+    font-weight:
+        600 !important;
+}}
+
+
+/* =========================================================
+   SELECT TEXT
+   ========================================================= */
+
+div[data-baseweb="select"] span {{
+
+    color:
+        #0f172a !important;
+
+    font-weight:
+        600 !important;
+}}
+
+
+/* =========================================================
+   DROPDOWN
+   ========================================================= */
+
+ul[role="listbox"] {{
+
+    background:
+        #ffffff !important;
+
+    border:
+        1px solid #dbe7f2 !important;
+
+    border-radius:
+        10px !important;
+
+    box-shadow:
+        0 15px 35px rgba(15,23,42,0.15) !important;
+}}
+
+
+li[role="option"] {{
+
+    background:
+        #ffffff !important;
+
+    color:
+        #0f172a !important;
+
+    font-weight:
+        600 !important;
+
+    transition:
+        background 0.2s ease;
+}}
+
+
+li[role="option"]:hover {{
+
+    background:
+        #eff6ff !important;
+
+    color:
+        #1d4ed8 !important;
+}}
+
+
+/* =========================================================
+   TABS
+   ========================================================= */
+
+button[data-baseweb="tab"] {{
+
+    color:
+        #475569 !important;
+
+    font-weight:
+        700 !important;
+
+    transition:
+        all 0.25s ease;
+}}
+
+
+button[data-baseweb="tab"]:hover {{
+
+    color:
+        #2563eb !important;
+
+    background:
+        rgba(239,246,255,0.7) !important;
+
+    border-radius:
+        8px;
+}}
+
+
+/* =========================================================
+   PREDICT BUTTON
+   ========================================================= */
+
+.stButton {{
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    margin-top:
+        10px;
+
+    margin-bottom:
+        20px;
+}}
+
+
+.stButton > button {{
+
+    width:
+        100% !important;
+
+    max-width:
+        420px !important;
+
+    height:
+        58px !important;
+
+    background:
+        linear-gradient(
+            135deg,
+            #dc2626 0%,
+            #b91c1c 100%
+        ) !important;
+
+    color:
+        #ffffff !important;
+
+    border:
+        none !important;
+
+    border-radius:
+        14px !important;
+
+    font-size:
+        18px !important;
+
+    font-weight:
+        800 !important;
+
+    box-shadow:
+        0 10px 20px rgba(220,38,38,0.25) !important;
+
+    transition:
+        all 0.3s ease !important;
+}}
+
+
+/* BUTTON HOVER */
+
+.stButton > button:hover {{
+
+    background:
+        linear-gradient(
+            135deg,
+            #ef4444 0%,
+            #b91c1c 100%
+        ) !important;
+
+    transform:
+        translateY(-4px)
+        scale(1.01);
+
+    box-shadow:
+        0 16px 30px rgba(220,38,38,0.35) !important;
+}}
+
+
+/* BUTTON CLICK */
+
+.stButton > button:active {{
+
+    transform:
+        translateY(0)
+        scale(0.99);
+}}
+
+
+/* BUTTON TEXT */
+
+.stButton > button p,
+.stButton > button span {{
+
+    color:
+        #ffffff !important;
+
+    font-weight:
+        800 !important;
+}}
+
+
+/* =========================================================
+   RESULT CARD
+   ========================================================= */
+
+.result-card {{
+
+    border-radius:
+        18px;
+
+    padding:
+        26px;
+
+    margin-top:
+        20px;
+
+    box-shadow:
+        0 12px 24px rgba(0,0,0,0.07);
+
+    transition:
+        all 0.3s ease;
+}}
+
+
+.result-card:hover {{
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 18px 35px rgba(0,0,0,0.12);
+}}
+
+
+/* HIGH RISK */
+
+.result-card-high {{
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff5f5 0%,
+            #fed7d7 100%
+        );
+
+    border:
+        2px solid #f87171;
+}}
+
+
+/* LOW RISK */
+
+.result-card-low {{
+
+    background:
+        linear-gradient(
+            135deg,
+            #f0fdf4 0%,
+            #dcfce7 100%
+        );
+
+    border:
+        2px solid #4ade80;
+}}
+
+
+/* =========================================================
+   BADGES
+   ========================================================= */
+
+.badge-chip {{
+
+    display:
+        inline-block;
+
+    padding:
+        5px 12px;
+
+    background:
+        rgba(255,255,255,0.85);
+
+    border-radius:
+        20px;
+
+    font-size:
+        12px;
+
+    font-weight:
+        700;
+
+    color:
+        #334155;
+
+    margin-right:
+        6px;
+
+    margin-top:
+        6px;
+
+    border:
+        1px solid rgba(0,0,0,0.06);
+
+    transition:
+        all 0.2s ease;
+}}
+
+
+.badge-chip:hover {{
+
+    transform:
+        translateY(-2px);
+
+    background:
+        #ffffff;
+
+    box-shadow:
+        0 4px 10px rgba(15,23,42,0.08);
+}}
+
+
+/* =========================================================
+   ALERT
+   ========================================================= */
+
+[data-testid="stAlert"] {{
+
+    border-radius:
+        12px !important;
+
+    border:
+        1px solid #bfdbfe !important;
+}}
+
+
+[data-testid="stAlert"] p {{
+
+    font-weight:
+        700 !important;
+}}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.footer-text {{
+
+    text-align:
+        center;
+
+    color:
+        #64748b;
+
+    font-size:
+        13px;
+
+    margin-top:
+        35px;
+
+    padding-top:
+        15px;
+
+    border-top:
+        1px solid #dbe7f2;
+}}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {{
 
     .block-container {{
-        max-width: 1200px;
-        padding-top: 1.8rem;
-        padding-bottom: 3rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
     }}
 
-    /* Sleek Hero Banner */
     .hero-card {{
-        background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #1e3a8a 100%);
-        border-radius: 20px;
-        padding: 32px 36px;
-        color: white;
-        margin-bottom: 24px;
-        box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.15), 0 8px 10px -6px rgba(15, 23, 42, 0.1);
-        position: relative;
-        overflow: hidden;
-    }}
-
-    .hero-card::after {{
-        content: "";
-        position: absolute;
-        top: -40%;
-        right: -5%;
-        width: 320px;
-        height: 320px;
-        background: radial-gradient(circle, rgba(239, 68, 68, 0.25) 0%, rgba(59, 130, 246, 0) 70%);
-        border-radius: 50%;
-        pointer-events: none;
+        padding: 25px 22px;
     }}
 
     .hero-title {{
-        font-size: 36px !important;
-        font-weight: 800 !important;
-        color: #ffffff !important;
-        margin: 0 0 6px 0 !important;
-        letter-spacing: -0.5px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
+        font-size: 28px !important;
     }}
 
     .hero-subtitle {{
-        font-size: 16px;
-        color: #94a3b8;
-        font-weight: 500;
-        margin: 0;
+        font-size: 14px;
     }}
 
-    .hero-tags {{
-        display: flex;
-        gap: 10px;
-        margin-top: 16px;
-        flex-wrap: wrap;
-    }}
-
-    .hero-tag {{
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        backdrop-filter: blur(8px);
-        padding: 5px 12px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 600;
-        color: #e2e8f0;
-    }}
-
-    /* Stat Cards */
-    .stat-card {{
-        background: rgba(255, 255, 255, 0.85);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(226, 232, 240, 0.8);
-        border-radius: 16px;
-        padding: 16px 20px;
-        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
-        display: flex;
-        align-items: center;
-        gap: 14px;
-    }}
-
-    .stat-icon {{
-        width: 44px;
-        height: 44px;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 20px;
-    }}
-
-    .icon-blue {{ background: #eff6ff; color: #2563eb; }}
-    .icon-green {{ background: #f0fdf4; color: #16a34a; }}
-    .icon-purple {{ background: #faf5ff; color: #9333ea; }}
-
-    .stat-label {{
-        font-size: 12px;
-        font-weight: 700;
-        text-transform: uppercase;
-        color: #64748b;
-    }}
-
-    .stat-value {{
-        font-size: 16px;
-        font-weight: 800;
-        color: #0f172a;
-    }}
-
-    /* Card Panels */
     .glass-panel {{
-        background: rgba(255, 255, 255, 0.92);
-        backdrop-filter: blur(16px);
-        border: 1px solid #e2e8f0;
-        border-radius: 18px;
-        padding: 24px;
-        box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.05);
-        margin-bottom: 20px;
-    }}
-
-    /* Form Input Controls */
-    [data-testid="stWidgetLabel"] p {{
-        font-weight: 700 !important;
-        color: #1e293b !important;
-        font-size: 14px !important;
-    }}
-
-    div[data-baseweb="input"], div[data-baseweb="select"] > div {{
-        border-radius: 10px !important;
-        border: 1px solid #cbd5e1 !important;
-        background-color: #ffffff !important;
-    }}
-
-    /* Predict Button Styling */
-    .stButton {{
-        display: flex;
-        justify-content: center;
-        margin-top: 10px;
-        margin-bottom: 20px;
+        padding: 17px;
     }}
 
     .stButton > button {{
-        width: 100% !important;
-        max-width: 420px !important;
-        height: 56px !important;
-        background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
-        color: #ffffff !important;
-        border: none !important;
-        border-radius: 14px !important;
-        font-size: 18px !important;
-        font-weight: 800 !important;
-        box-shadow: 0 10px 20px -5px rgba(220, 38, 38, 0.4) !important;
-        transition: all 0.25s ease !important;
+        max-width: 100% !important;
     }}
 
-    .stButton > button:hover {{
-        background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%) !important;
-        transform: translateY(-2px);
-        box-shadow: 0 14px 24px -4px rgba(220, 38, 38, 0.5) !important;
-    }}
+}}
 
-    .stButton > button p {{
-        color: #ffffff !important;
-        font-weight: 800 !important;
-        font-size: 18px !important;
-    }}
-
-    /* Results Card */
-    .result-card {{
-        border-radius: 18px;
-        padding: 26px;
-        margin-top: 20px;
-        box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.08);
-    }}
-
-    .result-card-high {{
-        background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
-        border: 2px solid #f87171;
-    }}
-
-    .result-card-low {{
-        background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-        border: 2px solid #4ade80;
-    }}
-
-    .badge-chip {{
-        display: inline-block;
-        padding: 4px 12px;
-        background: rgba(255, 255, 255, 0.8);
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 700;
-        color: #334155;
-        margin-right: 6px;
-        margin-top: 6px;
-        border: 1px solid rgba(0,0,0,0.05);
-    }}
-
-    /* Footer */
-    .footer-text {{
-        text-align: center;
-        color: #64748b;
-        font-size: 13px;
-        margin-top: 35px;
-        padding-top: 15px;
-        border-top: 1px solid #e2e8f0;
-    }}
 </style>
+""", unsafe_allow_html=True)
 """, unsafe_allow_html=True)
 
 # =========================================================
