@@ -684,7 +684,7 @@ Dr. Hearty AI Diagnostic Support System
                 mode="gauge+number",
                 value=risk_prob,
                 domain={'x': [0, 1], 'y': [0, 1]},
-                title={'text': "Dr. Hearty's Moving Needle Risk Meter 🫀", 'font': {'size': 20, 'color': "#f8fafc", 'family': "Fredoka"}},
+                title={'text': "Dr. Hearty's  Risk Meter 🫀", 'font': {'size': 20, 'color': "#f8fafc", 'family': "Fredoka"}},
                 number={'suffix': "%", 'font': {'size': 48, 'color': gauge_color, 'family': "Fredoka"}},
                 gauge={
                     'axis': {'range': [0, 100], 'tickwidth': 2, 'tickcolor': "#38bdf8"},
@@ -742,7 +742,7 @@ Dr. Hearty AI Diagnostic Support System
                 🚀 Dr. Hearty's Recommended Health Action Plan
             </h2>
             <p style="color: #cbd5e1; font-size: 1.05rem; margin-bottom: 1.5rem;">
-                Follow these fun & effective cartoon health initiatives to keep your heart smiling, energetic, and strong!
+                Follow these fun & effective health initiatives to keep your heart smiling, energetic, and strong!
             </p>
         """, unsafe_allow_html=True)
         
@@ -797,6 +797,6 @@ Dr. Hearty AI Diagnostic Support System
 # -----------------------------------------------------------------------------
 st.markdown("""
     <div class="footer">
-        ❤️ <b>Dr. Hearty's CardioPulse Suite</b> • Powered by Streamlit, Plotly & Cartoon AI Magic
+        ❤️ <b>Dr. Hearty's CardioPulse Suite</b> • Design by Ankit Rai
     </div>
 """, unsafe_allow_html=True)
