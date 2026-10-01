@@ -429,7 +429,7 @@ with st.sidebar:
 
     st.divider()
     st.image("https://cdn-icons-png.flaticon.com/512/3004/3004458.png", width=100, caption="Happy Heart Buddy")
-    st.caption("CardioPulse Cartoon Edition v7.0")
+    st.caption("CardioPulse")
 
 # -----------------------------------------------------------------------------
 # HERO HEADER WITH FLOATING CARTOON MASCOT
