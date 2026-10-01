@@ -104,6 +104,8 @@ streamlit run app.py
 
 The application is deployed using Streamlit Cloud.
 
+https://heart-disease-prediction-6xmdwwerqiusyappuxenqp.streamlit.app/
+
 After deployment, access the application through the generated Streamlit URL.
 
 ---
